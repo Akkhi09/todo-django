@@ -1,0 +1,16 @@
+<!-- templates/index.html -->
+<h1>📋 Lista de Tarefas</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <input type="text" name="title" placeholder="Nova tarefa">
+  <button type="submit">Adicionar</button>
+</form>
+
+<ul>
+  {% for task in tasks %}
+    <li>{{ task.title }}</li>
+  {% empty %}
+    <li>Sem tarefas</li>
+  {% endfor %}
+</ul>

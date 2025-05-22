@@ -1,16 +1,39 @@
-<!-- templates/index.html -->
-<h1>📋 Lista de Tarefas</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<form method="post">
-  {% csrf_token %}
-  <input type="text" name="title" placeholder="Nova tarefa">
-  <button type="submit">Adicionar</button>
-</form>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 
-<ul>
-  {% for task in tasks %}
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>📋 Lista de Tarefas</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Nova tarefa">
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <ul>
+    {% for task in tasks %}
     <li>{{ task.title }}</li>
-  {% empty %}
+    <input class="form-check-input" type="checkbox" value="{{task.done}}" />
+    {% empty %}
     <li>Sem tarefas</li>
-  {% endfor %}
-</ul>
+    {% endfor %}
+  </ul>
+</body>
+
+</html>

@@ -1,46 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
+  <title>Super To-Do List</title>
   <style>
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f0f0f0;
-      color: #333;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9fafb;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      color: #333;
     }
 
-    li {
-      list-style: none;
-      width: 80%;
-      height: 30px;
-      font-size: 2rem;
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #111827;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f3f4f6;
+      color: #374151;
+    }
+
+    .checkbox {
+      transform: scale(1.2);
+    }
+
+    .priority-high {
+      color: red;
+      font-weight: bold;
+    }
+
+    .priority-medium {
+      color: orange;
+    }
+
+    .priority-low {
+      color: green;
+    }
+
+    .day-section {
+      margin-top: 30px;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      resize: vertical;
+    }
+
+    .note-area {
+      background-color: #f9fafb;
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px dashed #d1d5db;
+      margin-top: 10px;
+    }
+
+    .footer-summary {
+      margin-top: 30px;
+      background-color: #f3f4f6;
+      padding: 20px;
+      border-radius: 8px;
     }
   </style>
 </head>
 
 <body>
-  <h1>📋 Lista de Tarefas</h1>
+  <div class="container">
+    <h1>✅ Super To-Do List</h1>
+    <h2>🎯 Objetivo da Semana</h2>
+    <textarea rows="2" placeholder="Escreva seu foco principal da semana..."></textarea>
 
-  <form method="post">
-    {% csrf_token %}
-    <input type="text" name="title" placeholder="Nova tarefa">
-    <button type="submit">Adicionar</button>
-  </form>
+    <h2>🗓️ Hoje - <span id="today-date"></span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>✔️</th>
+          <th>Prioridade</th>
+          <th>Tarefa</th>
+          <th>Categoria</th>
+          <th>Prazo</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" class="checkbox"></td>
+          <td class="priority-high">Alta</td>
+          <td><input type="text" placeholder="Ex: Enviar relatório"></td>
+          <td><input type="text" placeholder="Ex: Trabalho"></td>
+          <td><input type="text" placeholder="Ex: 15h"></td>
+          <td><input type="text" placeholder="Detalhes"></td>
+        </tr>
+        <!-- + linhas conforme necessário -->
+      </tbody>
+    </table>
 
-  <ul>
-    {% for task in tasks %}
-    <li>{{ task.title }}</li>
-    <input class="form-check-input" value="{{task.done}}" />
-    {% empty %}
-    <li>Sem tarefas</li>
-    {% endfor %}
-  </ul>
+    <div class="day-section">
+      <h2>📅 Planejamento da Semana</h2>
+      <div>
+        <h3>Segunda</h3><input type="text" placeholder="Tarefa da segunda...">
+        <h3>Terça</h3><input type="text" placeholder="Tarefa da terça...">
+        <h3>Quarta</h3><input type="text" placeholder="Tarefa da quarta...">
+        <h3>Quinta</h3><input type="text" placeholder="Tarefa da quinta...">
+        <h3>Sexta</h3><input type="text" placeholder="Tarefa da sexta...">
+        <h3>Sábado</h3><input type="text" placeholder="Tarefa do sábado...">
+        <h3>Domingo</h3><input type="text" placeholder="Tarefa do domingo...">
+      </div>
+    </div>
+
+    <h2>💡 Ideias & Notas</h2>
+    <div class="note-area">
+      <textarea rows="4" placeholder="Anote ideias ou observações importantes..."></textarea>
+    </div>
+
+    <div class="footer-summary">
+      <h2>📊 Resumo da Semana</h2>
+      <p>Tarefas Concluídas: <input type="text" size="2"> &nbsp; Em Andamento: <input type="text" size="2"> &nbsp;
+        Adiadas: <input type="text" size="2"></p>
+      <textarea rows="3" placeholder="Comentários ou reflexões sobre a semana..."></textarea>
+    </div>
+  </div>
+
+  <script>
+    // Atualiza a data de hoje automaticamente
+    document.getElementById("today-date").textContent = new Date().toLocaleDateString("pt-BR");
+  </script>
 </body>
 
 </html>
